@@ -28,9 +28,14 @@ function getBlipCaption(imageFile) {
 
 // Function to display the Blip caption
 function displayBlipCaption(data) {
-    const caption = data.outputs[0]?.data?.concepts[0]?.name || 'Caption not available';
-    const captionText = document.getElementById('captionText');
-    captionText.textContent = `Blip Caption: ${caption}`;
+    if (data && data.json && data.json.data && data.json.data.text && data.json.data.text.raw) {
+        const caption = data.json.data.text.raw;
+        const captionText = document.getElementById('captionText');
+        captionText.textContent = `Blip Caption: ${caption}`;
+    } else {
+        console.error('Invalid API response:', data);
+        alert('Invalid response from the API. Please try again later.');
+    }
 }
 
 // Event listener for the input field when a file is selected
