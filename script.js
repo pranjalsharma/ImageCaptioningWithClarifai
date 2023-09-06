@@ -1,47 +1,55 @@
-// Replace 'YOUR_API_KEY' with your Clarifai API key
-const apiKey = '6a57795b775b45f5a6d7ac7a9df37838';
+// Your PAT (Personal Access Token) can be found in the portal under Authentication
+const PAT = 'b2838349b7dc4081820729745aff7cfc';
+const MODEL_ID = 'general-english-image-caption-blip-2';
 
-// Get references to HTML elements
-const imageInput = document.getElementById('imageInput');
-const captionButton = document.getElementById('captionButton');
-const uploadedImage = document.getElementById('uploadedImage');
-const captionText = document.getElementById('captionText');
-
-// Event listener for image upload
-imageInput.addEventListener('change', () => {
-    const file = imageInput.files[0];
-    const imageUrl = URL.createObjectURL(file);
-    uploadedImage.src = imageUrl;
-});
-
-// Event listener for the 'Get Caption' button
-captionButton.addEventListener('click', () => {
-    // Get the uploaded image
-    const file = imageInput.files[0];
-    if (!file) {
-        alert('Please select an image to caption.');
-        return;
-    }
-
-    // Send a request to Clarifai for image captioning
+// Function to send a request to Clarifai Blip model
+function getBlipCaption(imageFile) {
     const formData = new FormData();
-    formData.append('model', 'general-v1.3');
-    formData.append('inputs', JSON.stringify({ data: { image: { base64: btoa(file) } } }));
+    formData.append('model', MODEL_ID);
+    formData.append('inputs', JSON.stringify({ data: { image: { base64: btoa(imageFile) } } }));
 
-    fetch('https://api.clarifai.com/v2/models/general-v1.3/outputs', {
+    const requestOptions = {
         method: 'POST',
         headers: {
-            'Authorization': `Key ${apiKey}`,
+            'Authorization': 'Key ' + PAT,
         },
-        body: formData,
-    })
-    .then(response => response.json())
-    .then(data => {
-        const caption = data.outputs[0].data.description.captions[0].text;
-        captionText.textContent = `Caption: ${caption}`;
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred while processing the image.');
-    });
+        body: formData
+    };
+
+    // Send a request to the Clarifai Blip model
+    fetch('https://api.clarifai.com/v2/models/' + MODEL_ID + '/outputs', requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            // Handle the response here
+            displayBlipCaption(result);
+        })
+        .catch(error => console.error('error', error));
+}
+
+// Function to display the Blip caption
+function displayBlipCaption(data) {
+    const caption = data.outputs[0]?.data?.concepts[0]?.name || 'Caption not available';
+    const captionText = document.getElementById('captionText');
+    captionText.textContent = `Blip Caption: ${caption}`;
+}
+
+// Event listener for the input field when a file is selected
+const imageInput = document.getElementById('imageInput');
+imageInput.addEventListener('change', () => {
+    const file = imageInput.files[0];
+    if (file) {
+        const imageUrl = URL.createObjectURL(file);
+        document.getElementById('uploadedImage').src = imageUrl;
+    }
+});
+
+// Event listener for the "Get Blip Caption" button
+const getCaptionButton = document.getElementById('getCaptionButton');
+getCaptionButton.addEventListener('click', () => {
+    const file = imageInput.files[0];
+    if (file) {
+        getBlipCaption(file);
+    } else {
+        alert('Please select an image to caption.');
+    }
 });
