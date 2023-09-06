@@ -9,7 +9,7 @@ const MODEL_ID = 'general-english-image-caption-blip-2';
 const MODEL_VERSION_ID = '71cb98f572694e28a99fa8fa86aaa825';
 
 // Function to send a request to Clarifai Blip model
-function getBlipCaption(imageUrl) {
+function getBlipCaption() {
     const imageUrl = 'https://samples.clarifai.com/metro-north.jpg';
     const raw = JSON.stringify({
         "user_app_id": {
@@ -82,7 +82,7 @@ getCaptionButton.addEventListener('click', () => {
         // Convert the uploaded image to a URL
         const imageUrl = URL.createObjectURL(file);
         // Now, you can use this imageUrl with the Clarifai API
-        getBlipCaption(imageUrl);
+        getBlipCaption();
     } else {
         alert('Please select an image to caption.');
     }
