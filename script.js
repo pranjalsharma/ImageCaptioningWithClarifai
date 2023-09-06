@@ -46,7 +46,6 @@ function getBlipCaption() {
         }) // Parse response as JSON
         .then(result => {
             // console.log(result.text());
-            // displayBlipCaption(result.json());
         })
         .catch(error => {
             console.error('Error:', error);
