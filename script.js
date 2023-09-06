@@ -7,7 +7,7 @@ const APP_ID = 'blip';
 // Change these to whatever model and image URL you want to use
 const MODEL_ID = 'general-english-image-caption-blip-2';
 const MODEL_VERSION_ID = '71cb98f572694e28a99fa8fa86aaa825'; 
-const IMAGE_URL = 'https://samples.clarifai.com/metro-north.jpg';
+const imageUrl = 'https://samples.clarifai.com/metro-north.jpg';
 
 // Function to send a request to Clarifai Blip model
 function getBlipCaption(imageUrl) {
@@ -20,7 +20,7 @@ function getBlipCaption(imageUrl) {
             {
                 "data": {
                     "image": {
-                        "url": imageUrl // Use the provided imageUrl
+                        "url": imageUrl
                     }
                 }
             }
