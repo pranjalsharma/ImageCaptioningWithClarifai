@@ -39,11 +39,13 @@ function getBlipCaption() {
 
     // Send a request to the Clarifai Blip model
     fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
-        .then(response => response.json()) // Parse response as JSON
-        .then(result => {
-            // Handle the response here
+        .then(response => {
+            response.json();
             console.log(response.text());
             displayBlipCaption(result);
+        }) // Parse response as JSON
+        .then(result => {
+            console.log(result.text());
         })
         .catch(error => {
             console.error('Error:', error);
