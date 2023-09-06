@@ -76,6 +76,7 @@ imageInput.addEventListener('change', () => {
 const getCaptionButton = document.getElementById('captionButton');
 getCaptionButton.addEventListener('click', () => {
     const file = imageInput.files[0];
+
     if (file) {
         // Convert the uploaded image to a URL
         const imageUrl = URL.createObjectURL(file);
