@@ -42,10 +42,11 @@ function getBlipCaption() {
         .then(response => {
             response.json();
             console.log(response.text());
-            displayBlipCaption(response.json());
+            //displayBlipCaption(response.json());
         }) // Parse response as JSON
         .then(result => {
             console.log(result.text());
+            displayBlipCaption(result);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -55,13 +56,26 @@ function getBlipCaption() {
 
 // Function to display the Blip caption
 function displayBlipCaption(data) {
-    if (data && data.json && data.json.data && data.json.data.text && data.json.data.text.raw) {
-        const caption = data.json.data.text.raw;
-        const captionText = document.getElementById('captionText');
-        captionText.textContent = `Blip Caption: ${caption}`;
+    // if (data && data.json && data.json.data && data.json.data.text && data.json.data.text.raw) {
+    //     const caption = data.json.data.text.raw;
+    //     const captionText = document.getElementById('captionText');
+    //     captionText.textContent = `Blip Caption: ${caption}`;
+    // } else {
+    //     console.error('Invalid API response:', data);
+    //     alert('Invalid response from the API. Please try again later.');
+    // }
+
+    // Check if the response contains outputs
+    if (response && response.outputs && response.outputs.length > 0) {
+        // Extract the raw caption text from the response
+        const captionText = response.outputs[0].data.text.raw;
+
+        // Display the caption on your web app
+        const captionElement = document.getElementById('captionText');
+        captionElement.textContent = `Blip Caption: ${captionText}`;
     } else {
-        console.error('Invalid API response:', data);
-        alert('Invalid response from the API. Please try again later.');
+        // Handle the case when the response does not contain valid data
+        alert('Unable to retrieve the Blip caption.');
     }
 }
 
