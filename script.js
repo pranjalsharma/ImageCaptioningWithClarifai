@@ -3,8 +3,8 @@ const PAT = 'b2838349b7dc4081820729745aff7cfc';
 const MODEL_ID = 'general-english-image-caption-blip-2';
 
 // Event listener for the "Get Blip Caption" button
-const captionButton = document.getElementById('getCaptionButton');
-getCaptionButton.addEventListener('click', () => {
+const captionButton = document.getElementById('captionButton');
+captionButton.addEventListener('click', () => {
     const file = imageInput.files[0];
     if (file) {
         console.log('Selected file:', file); // Debugging line
