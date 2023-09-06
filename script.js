@@ -1,5 +1,5 @@
 // Replace 'YOUR_API_KEY' with your Clarifai API key
-const apiKey = 'YOUR_API_KEY';
+const apiKey = '6a57795b775b45f5a6d7ac7a9df37838';
 
 // Get references to HTML elements
 const imageInput = document.getElementById('imageInput');
