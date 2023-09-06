@@ -10,7 +10,7 @@ const MODEL_VERSION_ID = '71cb98f572694e28a99fa8fa86aaa825';
 const IMAGE_URL = 'https://samples.clarifai.com/metro-north.jpg';
 
 // Function to send a request to Clarifai Blip model
-function getBlipCaption(imageFile) {
+function getBlipCaption(imageUrl) {
     const raw = JSON.stringify({
         "user_app_id": {
             "user_id": USER_ID,
