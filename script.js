@@ -41,12 +41,12 @@ function getBlipCaption() {
     fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
         .then(response => {
             response.json();
-            console.log(response.text());
-            //displayBlipCaption(response.json());
+            // console.log(response.text());
+            displayBlipCaption(response.json());
         }) // Parse response as JSON
         .then(result => {
-            console.log(result.text());
-            displayBlipCaption(result);
+            // console.log(result.text());
+            displayBlipCaption(result.json());
         })
         .catch(error => {
             console.error('Error:', error);
