@@ -1,29 +1,53 @@
-// Your PAT (Personal Access Token) can be found in the portal under Authentication
+// Your PAT (Personal Access Token) can be found in the portal under Authentification
 const PAT = 'b2838349b7dc4081820729745aff7cfc';
+// Specify the correct user_id/app_id pairings
+// Since you're making inferences outside your app's scope
+const USER_ID = 'salesforce';       
+const APP_ID = 'blip';
+// Change these to whatever model and image URL you want to use
 const MODEL_ID = 'general-english-image-caption-blip-2';
+const MODEL_VERSION_ID = '71cb98f572694e28a99fa8fa86aaa825'; 
 
 // Function to send a request to Clarifai Blip model
 function getBlipCaption(imageFile) {
-    const formData = new FormData();
-    formData.append('model', MODEL_ID);
-    formData.append('inputs', JSON.stringify({ data: { image: { base64: btoa(imageFile) } } }));
+    const raw = JSON.stringify({
+        "user_app_id": {
+            "user_id": USER_ID,
+            "app_id": APP_ID
+        },
+        "inputs": [
+            {
+                "data": {
+                    "image": {
+                        "url": imageUrl // Use the provided imageUrl
+                    }
+                }
+            }
+        ]
+    });
 
     const requestOptions = {
         method: 'POST',
         headers: {
+            'Accept': 'application/json',
             'Authorization': 'Key ' + PAT,
+            'Content-Type': 'application/json' // Specify content type
         },
-        body: formData
+        body: raw
     };
 
     // Send a request to the Clarifai Blip model
-    fetch('https://api.clarifai.com/v2/models/' + MODEL_ID + '/outputs', requestOptions)
-        .then(response => response.json())
+    fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
+        .then(response => response.json()) // Parse response as JSON
         .then(result => {
             // Handle the response here
+            console.log(response.text());
             displayBlipCaption(result);
         })
-        .catch(error => console.error('error', error));
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while processing the image.');
+        });
 }
 
 // Function to display the Blip caption
@@ -53,7 +77,10 @@ const getCaptionButton = document.getElementById('captionButton');
 getCaptionButton.addEventListener('click', () => {
     const file = imageInput.files[0];
     if (file) {
-        getBlipCaption(file);
+        // Convert the uploaded image to a URL
+        const imageUrl = URL.createObjectURL(file);
+        // Now, you can use this imageUrl with the Clarifai API
+        getBlipCaption(imageUrl);
     } else {
         alert('Please select an image to caption.');
     }
