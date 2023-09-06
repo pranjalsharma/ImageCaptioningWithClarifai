@@ -57,8 +57,8 @@ function getBlipCaption() {
 // Function to display the Blip caption
 function displayBlipCaption(response) {
     // Check if the response contains outputs
-    console.log(response);
-    console.log(response.outputs[0]);
+    console.log(response.value);
+    console.log(response.value.outputs[0]);
     if (response && response.outputs && response.outputs.length > 0) {
         // Extract the raw caption text from the response
         const captionText = response.outputs[0].data.text.raw;
