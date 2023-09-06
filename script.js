@@ -55,7 +55,7 @@ function getBlipCaption() {
 }
 
 // Function to display the Blip caption
-function displayBlipCaption(data) {
+function displayBlipCaption(response) {
     // if (data && data.json && data.json.data && data.json.data.text && data.json.data.text.raw) {
     //     const caption = data.json.data.text.raw;
     //     const captionText = document.getElementById('captionText');
