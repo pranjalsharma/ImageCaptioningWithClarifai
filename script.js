@@ -8,9 +8,11 @@ const APP_ID = 'blip';
 const MODEL_ID = 'general-english-image-caption-blip-2';
 const MODEL_VERSION_ID = '71cb98f572694e28a99fa8fa86aaa825';
 
+const imageUrlInput = document.getElementById('imageUrlInput');
+
 // Function to send a request to Clarifai Blip model
-function getBlipCaption() {
-    const imageUrl = 'https://samples.clarifai.com/metro-north.jpg';
+function getBlipCaption(imageUrl) {
+    // const imageUrl = 'https://samples.clarifai.com/metro-north.jpg';
     const raw = JSON.stringify({
         "user_app_id": {
             "user_id": USER_ID,
@@ -72,26 +74,39 @@ function displayBlipCaption(response) {
 }
 
 // Event listener for the input field when a file is selected
-const imageInput = document.getElementById('imageInput');
-imageInput.addEventListener('change', () => {
-    const file = imageInput.files[0];
-    if (file) {
-        const imageUrl = URL.createObjectURL(file);
-        document.getElementById('uploadedImage').src = imageUrl;
-    }
-});
+// const imageInput = document.getElementById('imageInput');
+// imageInput.addEventListener('change', () => {
+//     const file = imageInput.files[0];
+//     if (file) {
+//         const imageUrl = URL.createObjectURL(file);
+//         document.getElementById('uploadedImage').src = imageUrl;
+//     }
+// });
 
 // Event listener for the "Get Blip Caption" button
 const getCaptionButton = document.getElementById('captionButton');
 getCaptionButton.addEventListener('click', () => {
-    const file = imageInput.files[0];
+    // const file = imageInput.files[0];
 
-    if (file) {
-        // Convert the uploaded image to a URL
-        const imageUrl = URL.createObjectURL(file);
-        // Now, you can use this imageUrl with the Clarifai API
-        getBlipCaption();
-    } else {
-        alert('Please select an image to caption.');
+    // if (file) {
+    //     // Convert the uploaded image to a URL
+    //     const imageUrl = URL.createObjectURL(file);
+    //     // Now, you can use this imageUrl with the Clarifai API
+    //     getBlipCaption();
+    // } else {
+    //     alert('Please select an image to caption.');
+    // }
+
+    const imageUrl = imageUrlInput.value.trim();
+
+    // Check if the URL is empty
+    if (!imageUrl) {
+        alert('Please enter a valid image URL.');
+        return;
     }
+
+    document.getElementById('uploadedImage').src = imageUrl;
+
+    // Call a function to send the image URL to Clarifai for caption generation
+    getBlipCaption(imageUrl);
 });
