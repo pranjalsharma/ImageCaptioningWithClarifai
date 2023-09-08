@@ -66,7 +66,7 @@ function displayBlipCaption(response) {
 
         // Display the caption on your web app
         const captionElement = document.getElementById('captionText');
-        captionElement.textContent = `Blip Caption: ${captionText}`;
+        captionElement.textContent = `Caption: ${captionText}`;
     } else {
         // Handle the case when the response does not contain valid data
         alert('Unable to retrieve the Blip caption.');
