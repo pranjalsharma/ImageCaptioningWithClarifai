@@ -86,17 +86,6 @@ function displayBlipCaption(response) {
 // Event listener for the "Get Blip Caption" button
 const getCaptionButton = document.getElementById('captionButton');
 getCaptionButton.addEventListener('click', () => {
-    // const file = imageInput.files[0];
-
-    // if (file) {
-    //     // Convert the uploaded image to a URL
-    //     const imageUrl = URL.createObjectURL(file);
-    //     // Now, you can use this imageUrl with the Clarifai API
-    //     getBlipCaption();
-    // } else {
-    //     alert('Please select an image to caption.');
-    // }
-
     const imageUrl = imageUrlInput.value.trim();
 
     // Check if the URL is empty
@@ -106,7 +95,6 @@ getCaptionButton.addEventListener('click', () => {
     }
 
     document.getElementById('uploadedImage').src = imageUrl;
-
     // Call a function to send the image URL to Clarifai for caption generation
     getBlipCaption(imageUrl);
 });
