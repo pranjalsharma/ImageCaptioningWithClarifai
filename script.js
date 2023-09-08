@@ -42,9 +42,8 @@ function getBlipCaption() {
         .then(response => {
             // response.json();
             response.json().then((jsonResponse) => {
-                console.log(jsonResponse)
+                displayBlipCaption(jsonResponse);
             })
-            // displayBlipCaption(response.json());
         }) // Parse response as JSON
         .then(result => {
             // console.log(result.text());
