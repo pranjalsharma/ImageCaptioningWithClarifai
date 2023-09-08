@@ -41,8 +41,9 @@ function getBlipCaption() {
     fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
         .then(response => {
             // response.json();
-            const res = JSON.parse(response.json());
-            console.log(res);
+            response.json().then((jsonResponse) => {
+                console.log(jsonResponse)
+            })
             // displayBlipCaption(response.json());
         }) // Parse response as JSON
         .then(result => {
